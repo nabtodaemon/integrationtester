@@ -1,0 +1,9 @@
+#ifndef UNABTO_CONFIG_H
+#define UNABTO_CONFIG_H
+
+#define NABTO_LOG_ALL 		1
+#define UNABTO_PLATFORM_CUSTOM 	1
+#define NABTO_SET_TIME_FROM_ALIVE 0
+#define NABTO_ENABLE_STREAM 	0
+
+#endif
