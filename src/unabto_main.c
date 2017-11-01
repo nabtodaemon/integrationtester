@@ -1,6 +1,13 @@
 #include <stdio.h>
-#include <unabto/unabto_common_main.h>
-#include <unabto/unabto_app.h>
+#include "unabto/unabto_common_main.h"
+#include "unabto/unabto_app.h"
+#include "unabto_integrationtester_config.h"
+
+#include "unabto_aes_test.h"
+#include "unabto_sha256_test.h"
+#include "unabto_aes_cbc_test.h"
+#include "unabto_aes128_sha256_test.h"
+#include "unabto_hmac_sha256_test.h"
 
 int main(int argc, char** argv) {
     bool r;
@@ -50,3 +57,4 @@ int main(int argc, char** argv) {
 application_event_result application_event(application_request* request, unabto_query_request* read_buffer, unabto_query_response* write_buffer) {
     return AER_REQ_INV_QUERY_ID;
 }
+
