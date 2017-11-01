@@ -2,19 +2,53 @@
 #include <string.h>
 #include "unabto/unabto_env_base.h"
 #include "unabto/unabto_external_environment.h"
-#include "unabto_sha256_test.h"
+
+#include "unabto_integrationtester_config.h"
+
+#if UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4
+
+#include "modules/crypto/openssl_armv4/unabto_openssl_armv4_sha256.h"
+
+enum {
+    SHA256_BLOCK_SIZE = SHA256_BLOCK_LENGTH, // deprecated
+    SHA256_DIGEST_SIZE = SHA256_DIGEST_LENGTH // deprecated
+};
+
+#endif
+
+#if UNABTO_CRYPTO_MODULE_GENERIC
 
 #include "modules/crypto/generic/unabto_sha256.h"
+
+#endif
+
+#include "unabto_sha256_test.h"
 
 void unabto_sha256(const uint8_t* message, size_t message_len, unsigned char* digest);
 
 void unabto_sha256(const uint8_t* message, size_t len, unsigned char *digest)
 {
-    sha256_ctx ctx;
+
+#if UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4
+
+    SHA256_CTX ctx;
     
+    SHA256_Init_unabto(&ctx);
+    SHA256_Update_unabto(&ctx, message, len);
+    SHA256_Final_unabto(digest, &ctx);
+
+#endif
+
+#if UNABTO_CRYPTO_MODULE_GENERIC
+
+    sha256_ctx ctx;
+
     unabto_sha256_init(&ctx);
     unabto_sha256_update(&ctx, message, len);
     unabto_sha256_final(&ctx, digest);
+
+#endif
+
 }
 
 bool sha2_test_test(const char *vector, unsigned char *digest,
