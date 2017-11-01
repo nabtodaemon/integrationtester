@@ -1,0 +1,4 @@
+/* configured options and settings for IntegratonTester tool */
+
+#define UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4 @UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4@
+#define UNABTO_CRYPTO_MODULE_GENERIC @UNABTO_CRYPTO_MODULE_GENERIC@
