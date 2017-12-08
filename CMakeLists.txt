@@ -61,7 +61,11 @@ configure_file (
   "${CMAKE_CURRENT_SOURCE_DIR}/src/unabto_integrationtester_config.h"
   )
 
-add_definitions(-std=c99 -D_POSIX_C_SOURCE=199309L)
+if (${UNABTO_CRYPTO_MODULE} STREQUAL "libtomcrypt")
+  add_definitions(-std=c99 -D_POSIX_C_SOURCE=199309L -DLTC_NO_ASM -DLTC_TEST)
+else()
+  add_definitions(-std=c99 -D_POSIX_C_SOURCE=199309L)
+endif()
 
 link_libraries(pthread)
 
