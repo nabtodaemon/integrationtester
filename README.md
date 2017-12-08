@@ -25,3 +25,13 @@ cmake -DCMAKE_BUILD_TYPE=Release -DUNABTO_CRYPTO_MODULE=openssl_armv4 ..
 make
 
 
+libtomcrypt crypto module:
+---------------------------
+
+mkdir build
+
+cd build
+
+cmake -DCMAKE_BUILD_TYPE=Release -DUNABTO_CRYPTO_MODULE=libtomcrypt ..
+
+make
