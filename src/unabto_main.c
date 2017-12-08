@@ -3,11 +3,15 @@
 #include "unabto/unabto_app.h"
 #include "unabto_integrationtester_config.h"
 
+#if UNABTO_CRYPTO_MODULE_LIBTOMCRYPT
+#include "tomcrypt.h"
+#else
 #include "unabto_aes_test.h"
 #include "unabto_sha256_test.h"
 #include "unabto_aes_cbc_test.h"
 #include "unabto_aes128_sha256_test.h"
 #include "unabto_hmac_sha256_test.h"
+#endif
 
 int main(int argc, char** argv) {
     bool r;
