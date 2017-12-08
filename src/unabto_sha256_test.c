@@ -5,7 +5,7 @@
 
 #include "unabto_integrationtester_config.h"
 
-#if UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4
+#if UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4 == 1
 
 #include "modules/crypto/openssl_armv4/unabto_openssl_armv4_sha256.h"
 
@@ -14,9 +14,11 @@ enum {
     SHA256_DIGEST_SIZE = SHA256_DIGEST_LENGTH // deprecated
 };
 
-#endif
+#elif UNABTO_CRYPTO_MODULE_LIBTOMCRYPT == 1
 
-#if UNABTO_CRYPTO_MODULE_GENERIC
+#define SHA256_DIGEST_SIZE 32
+
+#else //UNABTO_CRYPTO_MODULE_GENERIC
 
 #include "modules/crypto/generic/unabto_sha256.h"
 
@@ -97,7 +99,7 @@ static const char message5[] = {
         0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa, 0xaa,
         0xaa, 0xaa, 0xaa, 0x00 };
                       
-
+#if UNABTO_CRYPTO_MODULE_LIBTOMCRYPT == 0
 bool sha256_test(void) {
     static const char message1[] = "abc";
     static const char message2a[] = "abcdbcdecdefdefgefghfghighijhi"
@@ -139,7 +141,8 @@ bool sha256_test(void) {
 
     return ret;
 }
-
+#endif
+    
 int sha256_timing_test(void) {
     nabto_stamp_t future;
     int i = 0;
