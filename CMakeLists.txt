@@ -7,6 +7,7 @@ include(${UNABTO_ROOT}/build/cmake/unabto_files.cmake)
 
 set(UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4 0)
 set(UNABTO_CRYPTO_MODULE_GENERIC 0)
+set(UNABTO_CRYPTO_MODULE_OPENSSL 0)
 
 set(src ${unabto_core_src})
 
@@ -15,6 +16,11 @@ if (DEFINED UNABTO_CRYPTO_MODULE)
     message("Using openssl_arm4 crypto module")
     set(UNABTO_CRYPTO_MODULE_OPENSSL_ARMV4 1)
     set(src ${src} ${unabto_module_crypto_openssl_armv4_src})
+  elseif (${UNABTO_CRYPTO_MODULE} STREQUAL "libtomcrypt")
+    message("Using libtomcrypt crypto module")
+    set(UNABTO_CRYPTO_MODULE_LIBTOMCRYPT 1)
+    set(src ${src} ${unabto_module_crypto_libtomcrypt_src})
+    set(src ${src} ${unabto_3rdparty_libtomcrypt_src})
   else()
     message("Using generic crypto module")
     set(UNABTO_CRYPTO_MODULE_GENERIC 1)
@@ -44,6 +50,11 @@ include_directories(
   ${UNABTO_ROOT}/src 
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   )
+
+if (${UNABTO_CRYPTO_MODULE} STREQUAL "libtomcrypt")
+  set(include_directories ${include_directories}
+    ${unabto_3rdparty_libtomcrypt_include_directories})
+endif()
 
 configure_file (
   "${CMAKE_CURRENT_SOURCE_DIR}/unabto_integrationtester_config.h.in"
